@@ -1,0 +1,150 @@
+/* styling for JJK LARPing minute meeting notes*/
+
+/* 2. CSS Variables with Fallback */
+:root {
+    --main-bg-color: #f0f4f8; /* Hex code */
+    --accent-color: rgb(70, 130, 180); /* RGB */
+    --text-color: hsl(210, 10%, 20%); /* HSL */
+    --title-font: 'Alfa Slab One';
+}
+
+/* Flexbox Requirement: Display flex, 3+ children, 3+ attributes */
+header {
+    display: flex;
+    flex-direction: row;        /* Attribute 1 */
+    justify-content: space-between; /* Attribute 2: Pushes items to ends */
+    align-items: center;        /* Attribute 3: Centers vertically */
+    background-color: color-mix(in srgb, var(--accent-color), white 80%); /* Wider-gamut color requirement */
+    padding: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.flex-header {
+    display: flex;                /* Required */
+    flex-direction: row;          /* Attribute 1 */
+    justify-content: space-around;/* Attribute 2 */
+    align-items: center;          /* Attribute 3 */
+    flex-wrap: wrap;              /* Optional Attribute 4 - great for mobile! */
+}
+
+body {
+    /* Using a variable with a fallback (e.g., 'white') */
+    background-color: var(--main-bg-color, white);
+    color: var(--text-color);
+    
+    /* 3. Absolute and Relative Units */
+    margin: 20px;       /* Absolute: px */
+    padding: 2rem;      /* Relative: rem */
+    font-family: Arial, sans-serif;
+}
+
+/* 4. Box Model: Padding, Margin, Border (Long & Short hand) */
+section {
+    /* Shorthand */
+    margin: 10px auto; 
+    border: 2px solid var(--accent-color);
+    
+    /* Longhand */
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    
+    border-radius: 8px; /* Border radius requirement */
+}
+
+h1, h2 {
+    /* Use the variable with a generic 'serif' fallback */
+    font-family: var(--title-font), serif;
+    font-weight: 400; /* This font only comes in weight 400 */
+    letter-spacing: 1px;
+}
+
+/* Grid Requirement: Display grid, 2+ children, 3+ attributes */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Attribute 1: 3 equal columns */
+    gap: 20px;                             /* Attribute 2: Spacing */
+    align-content: start;                  /* Attribute 3 */
+    margin-top: 2rem;
+}
+
+.grid-item {
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center; /* Text alignment requirement */
+}
+
+/* Nested Selectors (2023 feature) */
+section {
+    background-color: white;
+    
+    /* This is nested! It only targets h2 inside a section */
+    h2 {
+        color: var(--accent-color);
+        text-decoration: underline; /* Text decoration requirement */
+    }
+}
+
+video {
+    /* Sizing requirement: height and width */
+    width: 640px;  /* Absolute unit */
+    height: 360px; /* Absolute unit (maintains 16:9 ratio) */
+    
+    /* This ensures the video content doesn't stretch or distort */
+    object-fit: cover;
+    
+    border: 2px solid var(--accent-color);
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+/* :has() Selector (2023 feature) */
+/* This styles a section ONLY IF it contains an <img> tag */
+section:has(img) {
+    display: block;
+    border: 3px dashed orange; /* Using color name requirement */
+}
+
+/* Media Query for Mobile Devices */
+@media (max-width: 600px) {
+    .grid-container {
+        grid-template-columns: 1fr; /* Stack items vertically */
+    }
+    
+    header {
+        flex-direction: column; /* Stack header items */
+        text-align: center;
+    }
+}
+
+/* Pseudo-classes */
+button:hover { background-color: orange; cursor: pointer; } /* :hover */
+button:active { transform: scale(0.95); }                   /* :active */
+
+/* Combinators (Required: one of each) */
+
+/* 1. Descendant: Any 'p' inside an 'article' */
+article p { line-height: 1.6; }
+
+/* 2. Child: Only a 'p' that is a DIRECT child of 'section' */
+section > p { font-weight: bold; }
+
+/* 3. General Sibling: All 'p' tags that come after an 'h2' */
+h2 ~ p { color: #555; }
+
+/* 4. Adjacent Sibling: Only the very first 'p' immediately after an 'h2' */
+h2 + p { font-style: italic; }
+
+/* Attribute Selector */
+[target="_blank"] { text-decoration: none; border-bottom: 1px dashed; }
+
+/* Selector List */
+h1, h2, h3 { margin-bottom: 0.5rem; }
+
+/* Combining Two Selectors (element.class) */
+div.grid-item { box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
